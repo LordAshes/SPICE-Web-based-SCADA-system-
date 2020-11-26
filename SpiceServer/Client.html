@@ -1,0 +1,115 @@
+<html>
+	<style>
+	
+		.Header { font-size: 28px; background-color: #CCCCCC; }
+		TH { font-size: 20px; background-color: #AAAAAA; }
+		TD { font-size: 16px; background-color: #999999; }
+		span { margin:auto; display:table; }
+		
+		#Dynamic5 { width: 52px; height: 24px; border: 1px solid black; }
+		#Dynamic6 { margin:auto; display:table; width: 52px; height: 24px; border: 1px solid black; }
+		#Dynamic7 { width: 52px; height: 24px; border: 1px solid black; background-color: red; }
+		#Dynamic8 { width: 10px; height: 10px; border: 1px solid black; background-color: red; }
+		#Dynamic9 { position: absolute; left: 430px; top: 420px; width: 24px; height: 24px; }
+		#Dynamic9B { position: absolute; left: 430px; top: 420px; }
+		#DynamicA { width: 52px; height: 24px; border: 1px solid black; background-color: red; }
+		#DynamicB { position: absolute; left: 925px; top: 412px; width: 52px; height: 24px; border: 1px solid black; background-color: red; }
+		#DynamicB2 { position: absolute; left: 1025px; top: 412px; width: 52px; height: 24px; border: 1px solid black; background-color: red; }
+		#DynamicC { width: 52px; height: 24px; border: 1px solid black; background-color: red; }
+		
+	</style>
+	<script src="Framework\SpiceCoreFramework.js"></script>
+	<script src="Framework\SpiceHelpersFramework.js"></script>
+	<script src="Framework\SpiceModelsFramework.js"></script>
+	<script>
+	
+		var simVal1 = 2;
+		var simVal2 = 98;
+		var simDir = -1;
+		var speed = 2;
+	
+		function simulate()
+		{
+			simVal1=simVal1+(simDir*speed);
+			simVal2=simVal2-(simDir*speed);
+			if(simVal1<=1||simVal1>=100){simDir=simDir*-1;}
+			command('Signal1',simVal1);
+			command('Signal2',simVal2);
+		}
+		
+	</script>
+
+	<body onLoad="connect('ws://localhost:8090/demo/php-socket.php',function(){subscribe('Signal1,Signal2'); buildModels(); setInterval('simulate()',1000);});" style="background-color: #555555;">
+	
+		<TABLE Border=1 style="border: 1px solid black" >
+		    <TH class=Header colspan=2>Value Indication Dynamics<TR>
+			<TH width=280>&nbsp;<Font size=-2><I>ShortCut: </I></Font>Value()&nbsp;<TH width=280>&nbsp;<Font size=-2><I>Helper: </I></Font>setValue()&nbsp;<TR>
+			<TD><BR><span id=Dynamic1 class="Dynamic" Dynamic="@['Signal1']" >*</span><BR>
+			<TD><BR><span id=Dynamic2 class="Dynamic" Dynamic="setValue('Signal1');">*</span><BR>
+			<TR>
+		</TABLE>
+		<BR>
+		<TABLE Border=1 style="border: 1px solid black" >
+		    <TH class=Header colspan=5>Ranges Based Dynamics<TR>
+			<TH width=280>&nbsp;<Font size=-2><I>Helper: </I></Font>setText()&nbsp;<TH width=280>&nbsp;<Font size=-2><I>Helper: </I></Font>setTextColor()&nbsp;<TH width=280>&nbsp;<Font size=-2><I>Helper: </I></Font>SetBackgroundColor()&nbsp;<TH width=280>&nbsp;<Font size=-2><I>Helper: </I></Font>setIcon()&nbsp;<TH width=280>&nbsp;<Font size=-2><I>Helper: </I></Font>setOpacity()&nbsp;<TR>
+			<TD><BR><span id=Dynamic3 class="Dynamic" Dynamic="setText('Signal1',[10,50,90,65535],['Error','Off','On','OOB']);">*</span><BR>
+			<TD><BR><span id=Dynamic4 class="Dynamic" Dynamic="setValue('Signal1');setTextColor('Signal1',[10,50,90,65535],['white','green','red','yellow']);">*</span><BR>
+			<TD><BR><Center><div id=Dynamic5 class="Dynamic" Dynamic="setBackgroundColor('Signal1',[10,50,90,65535],['white','green','red','yellow']);" /></Center><BR>
+			<TD><BR><Center><img id=Dynamic6 class="Dynamic" Dynamic="setIcon('Signal1',[10,50,90,65535],['./Images/unknown.png','./Images/off.png','./Images/on.png','./Images/unknown.png']);" /></Center><BR>
+			<TD><BR><Center><div id=Dynamic7 class="Dynamic" Dynamic="setOpacity('Signal1',[10,50,90,65535],[0.1,0.5,1,0.1]);" /></Center><BR>
+			<TR>
+		</TABLE>
+		<BR>
+		<TABLE Border=1 style="border: 1px solid black" >
+		    <TH class=Header colspan=5>Linear Scaling Based Dynamics<TR>
+			<TH width=280>&nbsp;<Font size=-2><I>Helper: </I></Font>SetPosition()&nbsp;<TH width=280>&nbsp;<Font size=-2><I>Helper: </I></Font>SetRotation()&nbsp;<TH width=280>&nbsp;<Font size=-2><I>Helper: </I></Font>setWidth()&nbsp;<TH width=280>&nbsp;<Font size=-2><I>Helper: </I></Font>setHeight() <Font size=-2>setHeightFromTop()</Font> &nbsp;<TH width=280><Font size=-2><I>Helper: </I></Font>setScale()&nbsp;<TR>
+			<TD><Center>--------------------------------------------<div id=Dynamic8 class="Dynamic" Dynamic="setPos('Signal1',0,100,30,420,260,420);" /></Center>
+			<TD><BR><img id=Dynamic9B src='./Images/dialback.png' /><img id=Dynamic9 class="Dynamic" Dynamic="setRotate('Signal1',0,100,0,180);" src=Images\dial.png /><BR>
+			<TD><BR><Center><div id=DynamicA class="Dynamic" Dynamic="setWidth('Signal1',0,100,1,52);" /></Center><BR>
+			<TD><div id=DynamicB class="Dynamic" Dynamic="setHeightFromTop('Signal1',0,100,1,24);" /></div><div id=DynamicB2 class="Dynamic" Dynamic="setHeight('Signal1',0,100,1,24,436);" /></div>
+			<TD><BR><Center><div id=DynamicC class="Dynamic" Dynamic="setScale('Signal1',0,100,1,2);" /></Center><BR>
+			<TR>
+		</TABLE>
+		<BR>
+		
+		<DIV Id=Shadow1 style="position: absolute; z-Index: 0; left: 697px; top: 411px; width: 56px; height: 28px; background-color: rgba(0,0,0,0.25)"></DIV>
+		<DIV Id=Shadow2 style="position: absolute; z-Index: 0; left: 924px; top: 411px; width: 56px; height: 28px; background-color: rgba(0,0,0,0.25)"></DIV>
+		<DIV Id=Shadow3 style="position: absolute; z-Index: 0; left: 1024px; top: 411px; width: 56px; height: 28px; background-color: rgba(0,0,0,0.25)"></DIV>
+		<DIV Id=Shadow4 style="position: absolute; z-Index: 0; left: 1240px; top: 397px; width: 112px; height: 56px; background-color: rgba(0,0,0,0.25)"></DIV>
+		
+		<Span Id=Info1 style='position: absolute; left: 800px; top: 10px; font-size:96px' >SPICE</Span>
+		<Span Id=Info2 style='position: absolute; left: 720px; top: 110px; font-size: 24px' >SuPervisory Integrated Control Environment</Span>
+		<span Id=Info3 style="position: absolute; left: 890px; top: 175px; font-size: 16px;">(Examples Use: 10, 50, 90, +)</span>
+		
+		<DIV Id=Thermometer1 Class="Model" Model="Thermometer('Signal1',0,100,'-40','+0','+40','&deg;C');" style='position: absolute; left: 50px; top: 500px;'" ></DIV>
+		<Span Id=Thermometer1Label style='position: absolute; left: 50px; top: 900px;' >Basic Thermometer</Span>
+		<DIV Id=Thermometer2 Class="Model" Model="ThermometerRanged('Signal1',0,100,'-40','+32','+104','&deg;F',[-1,25,75,100,65535],['white','blue','green','red','yellow']);" style='position: absolute; left: 250px; top: 500px;'" ></DIV>
+		<Span Id=Thermometer1Label style='position: absolute; left: 220px; top: 900px;' >Range Color Thermometer</Span>
+		<DIV Id=Gauge1 Class="Model" Model="Gauge('Signal1',0,100,0,250,'KM/H');" style='position: absolute; left: 450px; top: 500px;' ></DIV>
+		<Span Id=Thermometer1Label style='position: absolute; left: 600px; top: 900px;' >Gauge</Span>
+		
+		<DIV style='position: absolute; left: 900px; top: 500px; font-size: 22px;'>
+		  Features:<BR>
+		  <BR>
+		  - Dynamics (javascript code with optional helper functions)<BR>
+		  &nbsp; &nbsp;defined directly on the HTML element<BR>
+		  - Painless websocket communication to server (just include<BR>
+		  &nbsp; &nbsp;the SpiceCoreFramework.js file)<BR>
+		  - Client subscription based communication to server (only gets<BR>
+		  &nbsp; &nbsp;updates for subscribed signals)<BR>
+		  - Automatic dynamics update when data changes but can be<BR>
+		  &nbsp; &nbsp;intercepted for efficient updates on large pages<BR>
+		  - Inclues "helper" functions for common SCADA visualization<BR>
+		  - Supports models for easy reuse of symbols<BR>
+		  - Utilizes SQLite database but can easily be changed to<BR>
+		  &nbsp; &nbsp;other database implementation<BR>
+		  - Pure Javascript and PHP<BR>
+		  - Alarm Server, Alarm Banner and Trend Viewer coming soon<BR>
+		  <BR>
+		  <span style="font-size: 16px;">
+		  * Note: Shadows on setWidth, setHeight and setScale, above, are added for reference only. 
+		  </span>
+		</DIV>
+
+	</body>
+</html>
