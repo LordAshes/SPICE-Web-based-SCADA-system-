@@ -1,0 +1,73 @@
+Usage:
+
+The following outlines the step to create SPICE Server SCADA pages:
+
+1. Create a html or similar file
+2. Add the SPICE Server Framework files to your page using the <SCRIPT> element.
+
+    <SCRIPT src="Framework\SpiceCoreFramework.js"></SCRIPT>
+    <SCRIPT src="Framework\SpiceHelpersFramework.js"></SCRIPT>
+    <SCRIPT src="Framework\SpiceModelsFramework.js"></SCRIPT>
+
+   At a minimum the first (Core) framework file needs to be included. This contains all of the necessary websocket information necessary for the client and the server
+   to communicate with each other.
+
+   The second (Helpers) framework file is highly recommended because it contains all of the helper functions which provide easy access to SCADA visualization dynamics.
+   Since the added dynamic property of elements is just javascript code, it is possible to achieve the same results without including the helper files but the code
+   will be more complicated as compared to dynamic properties which make use of the helper functions.
+
+   The last (Models) framework file is intended as a source for defining all models. However, models can be defined in any files or a combination of files and thus
+   they don't need to be placed in this one particular file. The Models file that is included has a model for a Thermometer, a model for a ThermometerRanged, and
+   a model for Gauge. See the contents of this file for the expected parameters that should be passed to the model in order to create an instance of it. It should
+   be noted that all model files start with an container parameter. When creating the model this first container parameter should be omitted because it will be
+   inserted automatically by the framework.
+   
+3. Add a connect call to the page. This is typically done using onLoad. The first parameter of the connect statement is the url of the SpiceServer. The second
+   parameter of the connect statement is a callback function to be executed when a connection is established. Typically this is a call to the subscribe function 
+   and buildModels function. The buildModels function can be omitted if models are not being used.
+   
+     onLoad="connect('ws://localhost:8090/SpiceServer/',function(){subscribe('Signal1,Signal2'); buildModels();}); 
+
+4. Currently the subscribe functionality is manual. The subscribe function, usually the callback of the connect function, lists all of the signals that the
+   page uses so that the server knows which data updates to sent the page. This ensures that the page only gets data updates for signals it is interested in.
+   The parameter to the subscribe function is a comma delimited list of the signal names. In the above example, the page subscribes to two signals. It should
+   be noted that subscribing to a signal automatically subscribes to the corresponding timestamp and quality signal.
+   
+5. Lastly we build all the models on the page (if any). 
+   
+     buildModels();
+   
+6. Now that we have the page connecting to the SpiceServer and getting data, we can make use of the data. Any data changes are pushed to the client and stored
+   in a javascript array called signals. To use the values of a signal, simplay read the signals array for the signal name:
+
+     alert(signals['Signal1']);
+     
+   To read the timestamp or the quality, append ".timestamp" or ".quality" to the signal name, such as:
+   
+     alert(signals['Signal1.timestamp']);
+
+7. Dynamics (javascript code) can be added to any HTML element and will get executed each time the page gets any signal updates. To add dynamics to an HTML element
+   the class of the element needs to include Dynamic and a property called Dynamic is set with the javascript code to be executed. Typically this javascript code
+   used the provided helper functions to simplify the javascript code.
+
+     <div id=Indicator class="Dynamic" Dynamic="setBackgroundColor('Signal1',[10,50,90,65535],['white','green','red','yellow']);" />
+
+   The above DIV element is marked as Dynamic (using its class) and the dynamic to be executed, each time the page gets signal updates, is to call the helper function
+   setBackgroundColor to set the element's background color based on the provided signal value (in this case Signal1).
+
+   Remember the dynamic property can contain any valid javascript code (or even a function call). The helpers are there just to simplify common SCADA visualization
+   javascript code.
+   
+8. To create an instances of a model, once the model has been defined, a container HTML element is required (typically a DIV). The class of this element is set to
+   include Model and the Model property is set to the function for creating the model. This function typically identifies a signal or multiple signals whcih will
+   drive that particular instance of the model and any other parameters that are needed to create an instance of the model. The previously discussed buildModels()
+   triggers all of these elements to create the corresponding models allow easy reuse of a model many times on the page.
+
+     <DIV Id=Gauge1 Class="Model" Model="Gauge('Signal1',0,100,0,250,'KM/H');" style='position: absolute; left: 450px; top: 500px;' ></DIV>
+
+   The above example, creates an instance of the Gauge model which is bound to the signal Signal1 and the values 0 to 100 are mapped to 0 and 250 on the gauge.
+   The units on the gauge are set to KM/H. The page can easily make multiple gauges providing information about different signals simply by making more DIV elements
+   and changing the parameters of the Model property (i.e. the construction parameters of that specific instance of the gauge model).
+   
+
+   
