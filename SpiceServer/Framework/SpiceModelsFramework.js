@@ -1,4 +1,4 @@
-version = { "Model": "1.0" };
+version = { "Model": "1.1" };
 
 function uniqueId(base)
 {
@@ -42,7 +42,7 @@ function Thermometer(container,signal,vmin,vmax,tmin,tmid,tmax,units)
 	Thermometer_Indicator.style.zIndex = 2;	
 	Thermometer_Indicator.style.width = "65px";
 	Thermometer_Indicator.style.backgroundColor = "red";
-	Thermometer_Indicator.setAttribute("Dynamic","setHeight('"+signal+"',0,100,65,270,280);");
+	Thermometer_Indicator.setAttribute("Dynamic","setHeight_('"+signal+"',0,100,65,270,280);");
 
 	var Thermometer_Frontplate = document.createElement("IMG");
 	Thermometer_Frontplate.id = Thermometer_id+"_Frontplate";
@@ -124,7 +124,7 @@ function ThermometerRanged(container,signal,vmin,vmax,tmin,tmid,tmax,units,range
 		colorString = colorString + "'"+colors[c]+"',";
 	}
 	colorString = colorString.substring(0,colorString.length-1);
-	el.setAttribute("Dynamic",dynamic+"setBackgroundColor('"+signal+"',["+ranges+"],["+colorString+"]);");
+	el.setAttribute("Dynamic",dynamic+"setBackgroundColor_('"+signal+"',["+ranges+"],["+colorString+"]);");
 
 	return id;
 }
@@ -208,7 +208,7 @@ function Gauge(container,signal,vmin,vmax,smin,smax,units)
 	Gauge_Indicator.style.zIndex = 4;	
 	Gauge_Indicator.src = "./Images/Gauge_Needle.png";
 	Gauge_Indicator.style.visibility = "visible";
-	Gauge_Indicator.setAttribute("Dynamic","setRotate('"+signal+"',0,100,-120,120);");
+	Gauge_Indicator.setAttribute("Dynamic","setRotate_('"+signal+"',0,100,-120,120);");
 
 	container.appendChild(Gauge_Backplate);
 	container.appendChild(Gauge_Indicator);

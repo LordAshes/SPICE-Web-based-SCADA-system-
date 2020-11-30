@@ -1,6 +1,6 @@
 var websocket = null; 
 var signals = [];
-var version = { "Core": "1.1" };
+var version = { "Core": "1.2" };
 
 function connect(url, callback)
 {
@@ -59,6 +59,20 @@ function getSignals()
 		signal = work.substring(0,work.indexOf('"'));
 		if(!list.includes(signal)){list.push(signal);}
 	}
+	var work = content;
+	while(work.indexOf("_('")>0)
+	{
+		work = work.substring(work.indexOf("_('")+("_('".length));
+		signal = work.substring(0,work.indexOf("'"));
+		if(!list.includes(signal)){list.push(signal);}
+	}
+	var work = content;
+	while(work.indexOf('_("')>0)
+	{
+		work = work.substring(work.indexOf('_("')+('_("'.length));
+		signal = work.substring(0,work.indexOf('"'));
+		if(!list.includes(signal)){list.push(signal);}
+	}
 	return list.join();
 }
 
@@ -110,7 +124,8 @@ function baseDataChange(updates)
 	var els = document.getElementsByClassName("Dynamic");
 	for (let el of els)
 	{
-		eval(buildDynamicsCode(el));
+		var code = buildDynamicsCode(el);
+		eval(code);
 	};
 }
 
@@ -136,7 +151,7 @@ function buildModels()
 
 function buildDynamicsCode(el)
 {
-	var dynamics = "var dynamic=document.getElementById('"+el.id+"');\r\n"+el.getAttribute("Dynamic");
+	var dynamics = el.getAttribute("Dynamic");
 	while(dynamics.indexOf("@[")>-1)
 	{
 		dynamics = dynamics.replace("@[","dynamic.innerHTML=signals[");
@@ -145,6 +160,7 @@ function buildDynamicsCode(el)
 	{
 		dynamics = dynamics.replace(");",",document.getElementById('"+el.id+"')) ;");
 	}
+	dynamics = "var dynamic=document.getElementById('"+el.id+"');\r\n"+dynamics;
 	return dynamics;
 }
 

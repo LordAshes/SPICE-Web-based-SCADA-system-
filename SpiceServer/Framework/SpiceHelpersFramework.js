@@ -1,13 +1,13 @@
 // -----------------------------------------------------------------------------------------------
 // Function for setting the text (innerHTML) of a dynamic element based on the signal value.
 // The core framework also has a short-cut for this function using the syntax @['SignalName']
-version = { "Helper": "1.0" };
+version = { "Helper": "1.1" };
 
 // -----------------------------------------------------------------------------------------------
 // signal = Name of the signal whose value is to be displayed
 // el = Element containing the dynamic. Filled in automatically by the core framework
 // -----------------------------------------------------------------------------------------------
-function setValue(signal,el)
+function setValue_(signal,el)
 {
 	el.innerHTML=signals[signal];
 }
@@ -22,7 +22,7 @@ function setValue(signal,el)
 // names = Array of names to be displayed for each range
 // el = Element containing the dynamic. Filled in automatically by the core framework
 // -----------------------------------------------------------------------------------------------
-function setText(signal,ranges,names,el)
+function setText_(signal,ranges,names,el)
 {
 	for(var i=0; i<ranges.length;i++)
 	{
@@ -44,7 +44,7 @@ function setText(signal,ranges,names,el)
 // color = Array of colors to be used for each range
 // el = Element containing the dynamic. Filled in automatically by the core framework
 // -----------------------------------------------------------------------------------------------
-function setTextColor(signal,ranges,colors,el)
+function setTextColor_(signal,ranges,colors,el)
 {
 	for(var i=0; i<ranges.length;i++)
 	{
@@ -66,7 +66,7 @@ function setTextColor(signal,ranges,colors,el)
 // color = Array of colors to be used for each range
 // el = Element containing the dynamic. Filled in automatically by the core framework
 // -----------------------------------------------------------------------------------------------
-function setBackgroundColor(signal,ranges,colors,el)
+function setBackgroundColor_(signal,ranges,colors,el)
 {
 	for(var i=0; i<ranges.length;i++)
 	{
@@ -88,7 +88,7 @@ function setBackgroundColor(signal,ranges,colors,el)
 // urls = Array of image urls to be used for each range
 // el = Element containing the dynamic. Filled in automatically by the core framework
 // -----------------------------------------------------------------------------------------------
-function setIcon(signal,ranges,urls,el)
+function setIcon_(signal,ranges,urls,el)
 {
 	for(var i=0; i<ranges.length;i++)
 	{
@@ -110,7 +110,7 @@ function setIcon(signal,ranges,urls,el)
 // opacity = Array of colors to be used for each range
 // el = Element containing the dynamic. Filled in automatically by the core framework
 // -----------------------------------------------------------------------------------------------
-function setOpacity(signal,ranges,opacity,el)
+function setOpacity_(signal,ranges,opacity,el)
 {
 	for(var i=0; i<ranges.length;i++)
 	{
@@ -135,7 +135,7 @@ function setOpacity(signal,ranges,opacity,el)
 // rmax = Maximum rotate	 value
 // el = Element containing the dynamic. Filled in automatically by the core framework
 // -----------------------------------------------------------------------------------------------
-function setRotate(signal,vmin,vmax,rmin,rmax,el)
+function setRotate_(signal,vmin,vmax,rmin,rmax,el)
 {
 	var signalValue = signals[signal];
 	if(signalValue<vmin){signalValue=vmin;}
@@ -155,7 +155,7 @@ function setRotate(signal,vmin,vmax,rmin,rmax,el)
 // wmax = Maximum width value
 // el = Element containing the dynamic. Filled in automatically by the core framework
 // -----------------------------------------------------------------------------------------------
-function setWidth(signal,vmin,vmax,wmin,wmax,el)
+function setWidth_(signal,vmin,vmax,wmin,wmax,el)
 {
 	var signalValue = signals[signal];
 	if(signalValue<vmin){signalValue=vmin;}
@@ -175,7 +175,7 @@ function setWidth(signal,vmin,vmax,wmin,wmax,el)
 // wmax = Maximum width value
 // el = Element containing the dynamic. Filled in automatically by the core framework
 // -----------------------------------------------------------------------------------------------
-function setHeightFromTop(signal,vmin,vmax,hmin,hmax,el)
+function setHeightFromTop_(signal,vmin,vmax,hmin,hmax,el)
 {
 	var signalValue = signals[signal];
 	if(signalValue<vmin){signalValue=vmin;}
@@ -196,7 +196,7 @@ function setHeightFromTop(signal,vmin,vmax,hmin,hmax,el)
 // ay = Vertical anchor point
 // el = Element containing the dynamic. Filled in automatically by the core framework
 // -----------------------------------------------------------------------------------------------
-function setHeight(signal,vmin,vmax,hmin,hmax,ay,el)
+function setHeight_(signal,vmin,vmax,hmin,hmax,ay,el)
 {
 	var signalValue = signals[signal];
 	if(signalValue<vmin){signalValue=vmin;}
@@ -217,7 +217,7 @@ function setHeight(signal,vmin,vmax,hmin,hmax,ay,el)
 // smax = Maximum scale factor value
 // el = Element containing the dynamic. Filled in automatically by the core framework
 // -----------------------------------------------------------------------------------------------
-function setScale(signal,vmin,vmax,hmin,hmax,el)
+function setScale_(signal,vmin,vmax,hmin,hmax,el)
 {
 	var signalValue = signals[signal];
 	if(signalValue<vmin){signalValue=vmin;}
@@ -240,7 +240,7 @@ function setScale(signal,vmin,vmax,hmin,hmax,el)
 // y2 = Y coordinate of second point
 // el = Element containing the dynamic. Filled in automatically by the core framework
 // -----------------------------------------------------------------------------------------------
-function setPos(signal,vmin,vmax,x1,y1,x2,y2,el)
+function setPos_(signal,vmin,vmax,x1,y1,x2,y2,el)
 {
 	var signalValue = signals[signal];
 	if(signalValue<vmin){signalValue=vmin;}
