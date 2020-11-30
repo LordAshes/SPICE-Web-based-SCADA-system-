@@ -1,6 +1,8 @@
 // -----------------------------------------------------------------------------------------------
 // Function for setting the text (innerHTML) of a dynamic element based on the signal value.
 // The core framework also has a short-cut for this function using the syntax @['SignalName']
+version = { "Helper": "1.0" };
+
 // -----------------------------------------------------------------------------------------------
 // signal = Name of the signal whose value is to be displayed
 // el = Element containing the dynamic. Filled in automatically by the core framework

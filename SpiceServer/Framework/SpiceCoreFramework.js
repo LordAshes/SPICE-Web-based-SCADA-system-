@@ -1,5 +1,6 @@
 var websocket = null; 
 var signals = [];
+var version = { "Core": "1.1" };
 
 function connect(url, callback)
 {
@@ -28,6 +29,37 @@ function connect(url, callback)
 function channels(list)
 {
 	websocket.send("channels|"+list);
+}
+
+function getSignals()
+{
+	var content = "";
+	var list = "";
+	for(script of document.scripts)
+	{
+		content = content + "[SCRIPT]\r\n" + script.text + "\r\n";
+	}
+	for(el of document.getElementsByClassName("Dynamic"))
+	{
+		content = "[ELEMENT]\r\n" + buildDynamicsCode(el) + "\r\n" + content;
+	}
+
+	var list = [];
+    var work = content;
+	while(work.indexOf("signals['")>0)
+	{
+		work = work.substring(work.indexOf("signals['")+("signals['".length));
+		signal = work.substring(0,work.indexOf("'"));
+		if(!list.includes(signal)){list.push(signal);}
+	}
+	var work = content;
+	while(work.indexOf('signals["')>0)
+	{
+		work = work.substring(work.indexOf('signals["')+('signals["'.length));
+		signal = work.substring(0,work.indexOf('"'));
+		if(!list.includes(signal)){list.push(signal);}
+	}
+	return list.join();
 }
 
 function subscribe(list)
@@ -78,17 +110,7 @@ function baseDataChange(updates)
 	var els = document.getElementsByClassName("Dynamic");
 	for (let el of els)
 	{
-		dynamics = el.getAttribute("Dynamic");
-		dynamics = "var dynamic=document.getElementById('"+el.id+"');\r\n"+dynamics;
-		while(dynamics.indexOf("@[")>-1)
-		{
-			dynamics = dynamics.replace("@[","dynamic.innerHTML=signals[");
-		}
-		while(dynamics.indexOf(");")>-1)
-		{
-			dynamics = dynamics.replace(");",",document.getElementById('"+el.id+"')) ;");
-		}
-		eval(dynamics);
+		eval(buildDynamicsCode(el));
 	};
 }
 
@@ -108,6 +130,22 @@ function buildModels()
 		}
 		eval(buildCode);
 	}
+}
+
+/* --- Helper Functions --- */
+
+function buildDynamicsCode(el)
+{
+	var dynamics = "var dynamic=document.getElementById('"+el.id+"');\r\n"+el.getAttribute("Dynamic");
+	while(dynamics.indexOf("@[")>-1)
+	{
+		dynamics = dynamics.replace("@[","dynamic.innerHTML=signals[");
+	}
+	while(dynamics.indexOf(");")>-1)
+	{
+		dynamics = dynamics.replace(");",",document.getElementById('"+el.id+"')) ;");
+	}
+	return dynamics;
 }
 
 function pad(txt,len=2,padding="0")

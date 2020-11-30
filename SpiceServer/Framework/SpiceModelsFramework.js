@@ -1,3 +1,5 @@
+version = { "Model": "1.0" };
+
 function uniqueId(base)
 {
 	var sequence = parseInt(Math.random()*65535);
