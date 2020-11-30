@@ -36,10 +36,10 @@
 			command('Signal1',simVal1);
 			command('Signal2',simVal2);
 		}
-		
+			
 	</script>
 
-	<body onLoad="connect('ws://localhost:8090/demo/php-socket.php',function(){subscribe('Signal1,Signal2'); buildModels(); setInterval('simulate()',1000);});" style="background-color: #555555;">
+	<body onLoad="connect('ws://localhost:8090/demo/php-socket.php',function(){subscribe(getSignals()); buildModels(); setInterval('simulate()',1000);});" style="background-color: #555555;">
 	
 		<TABLE Border=1 style="border: 1px solid black" >
 		    <TH class=Header colspan=2>Value Indication Dynamics<TR>
@@ -79,7 +79,7 @@
 		
 		<Span Id=Info1 style='position: absolute; left: 800px; top: 10px; font-size:96px' >SPICE</Span>
 		<Span Id=Info2 style='position: absolute; left: 720px; top: 110px; font-size: 24px' >SuPervisory Integrated Control Environment</Span>
-		<span Id=Info3 style="position: absolute; left: 890px; top: 175px; font-size: 16px;">(Examples Use: 10, 50, 90, +)</span>
+		<span Id=Info3 style="position: absolute; left: 890px; top: 175px; font-size: 16px;">(Examples Use: <10, <50, <90, <+)</span>
 		
 		<DIV Id=Thermometer1 Class="Model" Model="Thermometer('Signal1',0,100,'-40','+0','+40','&deg;C');" style='position: absolute; left: 50px; top: 500px;'" ></DIV>
 		<Span Id=Thermometer1Label style='position: absolute; left: 50px; top: 900px;' >Basic Thermometer</Span>
