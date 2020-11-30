@@ -9,6 +9,7 @@ This is a Javascript/PHP/SQLite implementation of a SCADA system. The default co
 * Run the client with the browser url: http:\\server\\SpiceServer\Client.html
 
 ## Change Log:
+* Added support for detecting signals in Helper functions. (Frameworks: Core V1.2, Helper V1.1, Model V1.1) 
 * Added getSignals() to Core Framework which automatically detects used signals (typically passed to subscribe)
 * Added version object to Core Framework which is updated by each of the 3 Frameworks (for determining version info)
 
@@ -17,7 +18,6 @@ This is a Javascript/PHP/SQLite implementation of a SCADA system. The default co
 The provided client source code both writes data and visualizes the database stored data. There is no implementation of a connector to field equipment. When collecting data from actual field equipment, the field devices would either communicate over websockets (just like the client) or, for higher performance, write directly to the server database. The current implementation supports either interface but no implementation code is currently provided.
 
 ## Coming Soon:
-* Automatic subscription functionality.
 * Sample code for implementing both styles of interfaces to collect data from field equipment.
 * Alarm Server functionality
 * Alarm Banner functionality
@@ -28,6 +28,8 @@ The provided client source code both writes data and visualizes the database sto
 The getSignals() function, typically used for automatic subscription, attempts to automatically detetc signals being used by the page and returns a unique set of the signals in a comma separated list format (compatible with the subscribe() function) format. However, there are limits to this automatic detection and in some cases it needs to be either replace with a manaual list or augmented manually. As a general rule, if the signal is written out the automatic detection will likley detect it. However if a signal is constructed dynamically (usually by concatenation of parts) the automatic detection will not work. In such a case one of the below solutions needs to be used.
 
 Basically the automatic signal detection looks through the page SCRIPT code and all element of the Dynamic attributes of all elements of the Dynamic class and searches for the pattern *signals["x"]* and *signals['x']* (where x is one of more characters representing the signal name. This means references such as *signals["Signal1"]* but references such as *signals["Signal"+index]* do not work correctly.
+
+Additional checks for *_('x',...)* and *_("x",...)* were added to detect signals in Helper functions. The logic assumes that Helper functions (and only Helper functions) will end in a trailing underscore and the first parameter is the signal name.    
 
 ### Automatic Signal Detection - Workaround 1:
 
