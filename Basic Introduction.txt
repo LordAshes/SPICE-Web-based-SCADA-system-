@@ -26,8 +26,12 @@ The following outlines the step to create SPICE Server SCADA pages:
    parameter of the connect statement is a callback function to be executed when a connection is established. Typically this is a call to the subscribe function 
    and buildModels function. The buildModels function can be omitted if models are not being used.
    
-     onLoad="connect('ws://localhost:8090/SpiceServer/',function(){subscribe('Signal1,Signal2'); buildModels();}); 
+     onLoad="connect('ws://localhost:8090/SpiceServer/',function(){subscribe('Signal1,Signal2'); buildModels();});
 
+   In most cases the list of subscribed signals can be obtained automatically using getSignals() thus:
+
+     onLoad="connect('ws://localhost:8090/SpiceServer/',function(){subscribe(getSignals()); buildModels();});
+ 
 4. Currently the subscribe functionality is manual. The subscribe function, usually the callback of the connect function, lists all of the signals that the
    page uses so that the server knows which data updates to sent the page. This ensures that the page only gets data updates for signals it is interested in.
    The parameter to the subscribe function is a comma delimited list of the signal names. In the above example, the page subscribes to two signals. It should
