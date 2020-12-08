@@ -9,7 +9,19 @@ This is a Javascript/PHP/SQLite implementation of a SCADA system. The default co
 * Run the client with the browser url: http:\\server\\SpiceServer\Client.html
 
 ## Usage Notes:
-The PHP Server portion of this SCADA system is intended for proof of concept, PHP skill demonstration, or small volume deployment only. The Server is not threaded (so that it can run even in a non-thread-safe version of PHP) and because it is PHP, and thus interpreted, it will likely perform less efficiently than a dedicated compiled server. However, the client side framework remains valid even if the server portion is swapped out for a dedicated compiled server and the server is optimized to exchange data with the backend data source only once regardless of how many clients request it. 
+The PHP Server portion of this SCADA system is intended for proof of concept, PHP skill demonstration, or small volume deployment only. The Server is not threaded (so that it can run even in a non-thread-safe version of PHP) and because it is PHP, and thus interpreted, it will likely perform less efficiently than a dedicated compiled server. However, the client side framework remains valid even if the server portion is swapped out for a dedicated compiled server and the server is optimized to exchange data with the backend data source only once regardless of how many clients request it.
+
+To start the SpiceServer, from the Server sub-folder, use:
+
+`php SpiceServer.php`
+
+To start the sample client, point your webbrowser to:
+
+`http://127.0.0.1/SpiceServer/Client.html`
+
+To start the simulated field device, from the Devices sub-folder, use:
+
+`php Device1.php`
 
 ## Change Log:
 * Added support for detecting signals in Helper functions. (Frameworks: Core V1.2, Helper V1.1, Model V1.1) 
