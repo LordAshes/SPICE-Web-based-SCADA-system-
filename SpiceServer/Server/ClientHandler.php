@@ -1,5 +1,8 @@
 <?php
 
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
+
 // Class for handling client websocket requests
 class ClientHandler
 {
@@ -44,6 +47,7 @@ class ClientHandler
 		global $clientData;
 		
 		$message = $this->unseal($sealedMessage);
+		echo "Msg:".$this->showBytes($message)."\r\n";
 		$action = substr($message,0,strpos($message,"|"));
 		$message = substr($message,strpos($message,"|")+1);
 		echo "Source: ".$client_ip_address."\r\n";
@@ -202,6 +206,19 @@ class ClientHandler
 		return $header.$socketData;
 	}
 
+	function showBytes($in)
+	{
+		$result = "";
+		for($i=0;$i<strlen($in); $i++)
+		{
+			$val = ord(substr($in,$i,1));
+			$hex = dechex($val);
+			if(strlen($hex)!=2){$hex = "0".$hex;}
+			$result = $result . $hex." ";
+		}
+		return $result;
+	}
+
 	// Function for performing a wbesocket handshake
 	function doHandshake($received_header,$client_socket_resource, $host_name, $port)
 	{
@@ -222,7 +239,7 @@ class ClientHandler
 		"Upgrade: websocket\r\n" .
 		"Connection: Upgrade\r\n" .
 		"WebSocket-Origin: $host_name\r\n" .
-		"WebSocket-Location: ws://$host_name:$port/demo/shout.php\r\n".
+		"WebSocket-Location: ws://$host_name:$port/SpiceServer\r\n".
 		"Sec-WebSocket-Accept:$secAccept\r\n\r\n";
 		socket_write($client_socket_resource,$buffer,strlen($buffer));
 	}
