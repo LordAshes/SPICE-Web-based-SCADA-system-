@@ -39,7 +39,7 @@
 			
 	</script>
 
-	<body onLoad="connect('ws://localhost:8090/demo/php-socket.php',function(){subscribe(getSignals()); buildModels(); setInterval('simulate()',1000);});" style="background-color: #555555;">
+	<body onLoad="connect('ws://localhost:8090/SpiceServer',function(){subscribe(getSignals()); buildModels(); setInterval('simulate()',1000);});" style="background-color: #555555;">
 	
 		<TABLE Border=1 style="border: 1px solid black" >
 		    <TH class=Header colspan=2>Value Indication Dynamics<TR>
@@ -87,6 +87,10 @@
 		<Span Id=Thermometer1Label style='position: absolute; left: 220px; top: 900px;' >Range Color Thermometer</Span>
 		<DIV Id=Gauge1 Class="Model" Model="Gauge('Signal1',0,100,0,250,'KM/H');" style='position: absolute; left: 450px; top: 500px;' ></DIV>
 		<Span Id=Thermometer1Label style='position: absolute; left: 600px; top: 900px;' >Gauge</Span>
+		
+		<Span Id=DeviceLabelA style='position: absolute; left: 1600px; top: 200px; font-size: 24pt' ><B>Deice Test:</B></Span>
+		<Span Id=DeviceLabelB style='position: absolute; left: 1600px; top: 240px;' ><B>Signal 2:</B></Span>
+		<Span Id=DeviceValue Class="Dynamic" Dynamic="@['Signal2']" style='position: absolute; left: 1600px; top: 260px;' >---</Span>
 		
 		<DIV style='position: absolute; left: 900px; top: 500px; font-size: 22px;'>
 		  Features:<BR>
