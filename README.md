@@ -1,6 +1,6 @@
 # SPICE (Web based SCADA-system)
 -----------------------------------------------------------------
-This is a Javascript/PHP/SQLite implementation of a SCADA system. The default configured SCADA screen showcases some of the SCADA system features.
+SPICE (SuPervisor & Integrated Control Enviroment) server is a Javascript/PHP/SQLite implementation of a SCADA system. The default configured SCADA screen showcases some of the SCADA system features that the SPICE server offers.
 
 ## Installation Notes:
 * Requires a PHP enabled web server (such as IIS)
